@@ -1,0 +1,18 @@
+{
+  "author": "Aaron Jorbin <aaron@jorb.in> (http://aaron.jorb.in)",
+  "name": "slidedown.js",
+  "description": "builds a slidedeck from a markdown file",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git" 
+    "url": "https://github.com/aaronjorbin/slidedown.js"
+  },
+  "engines": {
+    "node": "~0.6.8"
+  },
+  "dependencies": {
+    "commander" ">= 0.5.1" 
+  },
+  "devDependencies": {},
+  "optionalDependencies": {}
+}
