@@ -16,4 +16,7 @@
 
 
 *   ## GB9k
-    <img src="">
+    <img src="images/GB9k.jpg">
+
+*   ## Brainiac Wut
+    <img src="images/brainiac-wut.png">
