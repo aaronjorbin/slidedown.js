@@ -5,6 +5,6 @@
 *   # Planning
 
 *   # Find Problems
-    
+
     ## especially the ones we didn't know we had
 
