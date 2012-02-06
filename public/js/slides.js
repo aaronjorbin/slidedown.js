@@ -1,3 +1,7 @@
+/*
+Deck JS and slidedown.js specific js all in one file for now.
+*/
+
 /*!
 Deck JS - deck.core
 Copyright (c) 2011 Caleb Troughton
@@ -1165,6 +1169,13 @@ This module adds clickable previous and next links to the deck.
     .bind('deck.change', updateButtons);
 })(jQuery, 'deck');
 
+/*!
+Slidedown.js
+Copyright (c) 2012 Aaron Jorbin 
+Dual licensed under the MIT license and GPL license.
+https://github.com/aaronjorbin/slidedown.js/blob/master/MIT-license.txt
+https://github.com/aaronjorbin/slidedown.js/blob/master/GPL-license.txt
+*/
 
 (function($) {
     var container = $('.deck-container');  

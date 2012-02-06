@@ -1,8 +1,10 @@
 #! /usr/bin/env node
 /*!
-* slidedown
-* Copyright(c) 2012 Aaron Jorbin <aaron@jorb.in> 
-* MIT Licensed
+* slidedown.js
+* Copyright (c) 2012 Aaron Jorbin 
+* Dual licensed under the MIT license and GPL license.
+* https://github.com/aaronjorbin/slidedown.js/blob/master/MIT-license.txt
+* https://github.com/aaronjorbin/slidedown.js/blob/master/GPL-license.txt
 */
 
 /**
