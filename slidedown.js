@@ -19,8 +19,12 @@ var header = fs.readFileSync('header.html', 'ascii');
 console.log('header loaded');
 var footer = fs.readFileSync('footer.html', 'ascii');
 console.log('footer loaded');
-var source = fs.readFileSync(process.argv[2], 'ascii');
+var sourceFilename = process.argv[2] || 'slides.md';
+var source = fs.readFileSync(sourceFilename, 'ascii');
+console.log('source: ' + sourceFilename +' loaded');
 writeFile();
+
+/* Setup our Server */
 var file = new static.Server('./public');
 require('http').createServer(function (request, response) {
     request.addListener('end', function () {
@@ -28,15 +32,10 @@ require('http').createServer(function (request, response) {
     });
 }).listen(8080);
 
-
-if (process.argv.length > 4){
-    console.error('three arguments are required');
-    process.exit(1);
-}
-
 // The first arg is the file to watch
-fs.watchFile( process.argv[2], function(curr,prev){
-    source = fs.readFileSync(process.argv[2], 'ascii');
+fs.watchFile( sourceFilename, function(curr,prev){
+    source = fs.readFileSync(sourceFilename, 'ascii');
+    console.log('source reloaded');
     writeFile();
 });
 fs.watchFile('header.html', function(curr, prev){
@@ -58,5 +57,3 @@ function writeFile(){
     fs.writeFileSync('public/'+ filename, html, 'ascii');
     console.log( filename + ' written');
 }
-
-
