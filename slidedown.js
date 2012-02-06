@@ -1,8 +1,10 @@
 #! /usr/bin/env node
 /*!
-* slidedown
-* Copyright(c) 2012 Aaron Jorbin <aaron@jorb.in> 
-* MIT Licensed
+* slidedown.js
+* Copyright (c) 2012 Aaron Jorbin 
+* Dual licensed under the MIT license and GPL license.
+* https://github.com/aaronjorbin/slidedown.js/blob/master/MIT-license.txt
+* https://github.com/aaronjorbin/slidedown.js/blob/master/GPL-license.txt
 */
 
 /**
@@ -30,7 +32,7 @@ require('http').createServer(function (request, response) {
     request.addListener('end', function () {
         file.serve(request, response);
     });
-}).listen(8080);
+}).listen(9000);
 
 // The first arg is the file to watch
 fs.watchFile( sourceFilename, function(curr,prev){
