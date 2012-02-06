@@ -53,7 +53,7 @@ fs.watchFile('footer.html', function(curr,prev){
 
 // The second arg is the output file
 function writeFile(){
-    var filename =  process.argv[3] ||  process.argv[2].replace(/\.md/, '.html');
+    var filename =  sourceFilename ||  process.argv[2].replace(/\.md/, '.html');
     var innerHtml = md(source);
     var html = header + innerHtml + footer;
     fs.writeFileSync('public/'+ filename, html, 'ascii');
