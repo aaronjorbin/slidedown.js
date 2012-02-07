@@ -88,12 +88,12 @@ Metrics written by Coda Hale at Yammer
 
 
 *   ### finally {
-    <div class='presentor'>
+    <div class='presenter'>
         <h3>Aaron Jorbin</h3>
         <p><a href="http://aaron.jorb.in">aaron.jorb.in</a></p>
         <p><a href="http://twitter.com/aaronjorbin">@aaronjorbin</a></p>
     </div>
-    <div class='presentor'>
+    <div class='presenter'>
         <h3>Drew Stephens</h3>
         <p><a href="http://dinomite.net/">dinomite.net</a></p>
         <p><a href="http://twitter.com/dinomite">@dinomite</a></p>
