@@ -1213,7 +1213,7 @@ https://github.com/aaronjorbin/slidedown.js/blob/master/GPL-license.txt
 
 
                     
-        if ( img.length == 0 &&   alltxt == h1txt )
+        if ( img.length == 0 && (alltxt == h1txt || alltxt == h2txt ) )
             classes.push('only-title');
         else if (img.length == 0 && h1txt && h2txt && alltxt  == ( h1txt +  h2txt  )  )
             classes.push('h1h2');

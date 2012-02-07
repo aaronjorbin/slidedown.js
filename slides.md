@@ -4,9 +4,11 @@
 
 *   # Planning
 
-*   ## Find Problems
+*   # Find Problems
 
-    ### especially the ones we didn't know we had
+*   # Event the ones we didn't know we had
+
+*   # What do you alert on?
 
 
 *   ## MetricCatcher

@@ -682,17 +682,38 @@ body.deck-container .deck-status {
 .deck-container .slide.only-title.one-three h2,
 {
     text-align: left;
+    top: 25%;
 }
 .deck-container .slide.only-title.two-three h1,
 .deck-container .slide.only-title.two-three h2
 {
     text-align: right;
+    top: 25%;
 }
 .deck-container .slide.only-title.three-three h1,
 .deck-container .slide.only-title.three-three h2
 {
     text-align: center;
+    top: 25%;
 }
+
+.deck-container .slide.only-title.one-three.odd h1,
+.deck-container .slide.only-title.one-three.odd h2,
+{
+    top: 65%;
+}
+.deck-container .slide.only-title.two-three.odd h1,
+.deck-container .slide.only-title.two-three.odd h2
+{
+    top: 65%;
+}
+.deck-container .slide.only-title.three-three.odd h1,
+.deck-container .slide.only-title.three-three.odd h2
+{
+    top: 65%;
+}
+
+
 body,
 .deck-container .slide,
 .deck-container
