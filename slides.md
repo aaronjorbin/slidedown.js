@@ -6,7 +6,7 @@
 
 *   # Find Problems
 
-*   # Event the ones we didn't know we had
+*   # Even the ones we didn't know we had
 
 *   # What do you alert on?
 
@@ -24,29 +24,29 @@
     <img src="images/brainiac-wut.png">
 
 *   ## Setup Phetric
-    
+
     ### Phetric_Sender::init( 'localhost', '1420', $prepend );
 
 *   # $prepend = $app . $env;
 
 *   ## All at once or as they come?
-    
-    ### autoflush paramater will send metrics as they come in
-    ### Usefull for long running scripts
+
+    ### Autoflush paramater will send metrics immediately
+    ### Useful for long running scripts
 
 *   # Metrics come in many flavors
 
-*   ## Gauges 
+*   ## Gauges
     <img src="images/gauge.jpg">
 
-*   ## Timers 
+*   ## Timers
     <img src="images/timer.jpg">
 
-*   ## Counter  
+*   ## Counter
     <img src="images/counter.jpg">
 
-*   ## Meter 
+*   ## Meter
     <img src="images/meter.jpg">
 
-*   ## Histogram 
+*   ## Histogram
     <img src="images/histogram.jpg">
