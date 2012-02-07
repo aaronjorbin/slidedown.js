@@ -4,14 +4,15 @@
   "description": "builds a slidedeck from a markdown file",
   "version": "0.0.0",
   "repository": {
-    "type": "git" 
+    "type": "git", 
     "url": "https://github.com/aaronjorbin/slidedown.js"
   },
   "engines": {
     "node": "~0.6.8"
   },
-  "dependencies": {
-    "commander" ">= 0.5.1" 
+  "dependencies" : {
+    "node-markdown" : ">=0.1.0",
+    "node-static" : ">=0.5.9"
   },
   "devDependencies": {},
   "optionalDependencies": {}

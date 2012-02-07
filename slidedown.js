@@ -15,6 +15,21 @@ var fs = require('fs')
     , md =  require("node-markdown").Markdown
     , static = require('node-static'); 
 
+// This is the config object.  defaults will be overridden by slidedown.json
+var config = function(){
+    this.template = 'remies';
+    this.title    = 'A slidedown.js presentation';
+    this.header   = '/templates/' + this.template + '/header.index';
+    this.projectdir = '.';
+};
+
+var slidedown = function(config){
+    var header = footer = source = '';
+    this.updateFile = function( file){ return fs.readFileSync( config.projectdir + file , 'ascii'); };
+    this.getHeader 
+
+}
+
 // A couple of globals
 var output = false;
 var header = fs.readFileSync('header.html', 'ascii');
