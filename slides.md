@@ -25,11 +25,11 @@
     
     ### Phetric_Sender::init( 'localhost', '1420', $prepend );
 
-*   # $prepend = $application_type . $enviornment;
+*   # $prepend = $app . $env;
 
 *   ## All at once or as they come?
     
-    ### autoflush param will send metrics as they come in
+    ### autoflush paramater will send metrics as they come in
     ### Usefull for long running scripts
 
 *   # Metrics come in many flavors

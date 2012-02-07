@@ -224,7 +224,7 @@ html {
   font-weight: bold;
   padding-top: .5em;
   margin: 0 0 .66666em 0;
-  border-bottom: 3px solid #888;
+  border-bottom: 3px solid #8a8a8a;
 }
 .slide h3 {
   font-size: 1.4375em;
@@ -261,7 +261,7 @@ html {
   white-space: pre-wrap;
   word-wrap: break-word;
   padding: 1em;
-  border: 1px solid #888;
+  border: 1px solid #8a8a8a;
 }
 .slide em {
   font-style: italic;
@@ -505,7 +505,7 @@ body.deck-container {
   text-align: center;
   text-decoration: none;
   color: #fff;
-  background: #888;
+  background: #8a8a8a;
 }
 .borderradius .deck-container .deck-prev-link, .borderradius .deck-container .deck-next-link {
   -webkit-border-radius: 16px;
@@ -537,7 +537,7 @@ body.deck-container {
   position: absolute;
   bottom: 10px;
   right: 5px;
-  color: #888;
+  color: #8a8a8a;
   z-index: 3;
   margin: 0;
 }
@@ -576,17 +576,17 @@ body.deck-container .deck-status {
       color: #000;
 }
 .deck-container .slide h2 {
-      color: #c00;
+      color: #d70000;
         border-bottom-color: #ccc;
 }
 .deck-container .slide h3 {
-      color: #888;
+      color: #8a8a8a;
 }
 .deck-container .slide pre {
       border-color: #ccc;
 }
 .deck-container .slide code {
-      color: #888;
+      color: #8a8a8a;
 }
 .deck-container .slide blockquote {
       font-size: 2em;
@@ -602,18 +602,18 @@ body.deck-container .deck-status {
       font-size: .5em;
         font-style: normal;
           font-weight: bold;
-            color: #888;
+            color: #8a8a8a;
 }
 .deck-container .slide ::-moz-selection {
-      background: #c00;
+      background: #d70000;
         color: #fff;
 }
 .deck-container .slide ::selection {
-      background: #c00;
+      background: #d70000;
         color: #fff;
 }
 .deck-container .slide a, .deck-container .slide a:hover, .deck-container .slide a:focus, .deck-container .slide a:active, .deck-container .slide a:visited {
-      color: #c00;
+      color: #d70000;
         text-decoration: none;
 }
 .deck-container .slide a:hover, .deck-container .slide a:focus {
@@ -630,7 +630,7 @@ body.deck-container .deck-status {
       color: #fff;
 }
 .deck-container .deck-prev-link:hover, .deck-container .deck-prev-link:focus, .deck-container .deck-next-link:hover, .deck-container .deck-next-link:focus {
-      background: #c00;
+      background: #d70000;
         text-decoration: none;
 }
 .deck-container .deck-status {
@@ -656,4 +656,46 @@ body.deck-container .deck-status {
     width: 50%;
     text-align:center;
     float:left;
+}
+.deck-container .slide.only-title h1,
+.deck-container .slide.only-title h2,
+{
+    border: none;
+    position:absolute;
+    padding: 0 48px;
+    left: 0;
+    right: 0;
+    top: 50%;:
+}
+
+.deck-container .slide.only-title.odd h1,
+.deck-container .slide.only-title.odd h2
+{
+    color: #d33682;
+}
+.deck-container .slide.only-title.even h1,
+.deck-container .slide.only-title.even h2
+{
+    color: #859900;
+}
+.deck-container .slide.only-title.one-three h1,
+.deck-container .slide.only-title.one-three h2,
+{
+    text-align: left;
+}
+.deck-container .slide.only-title.two-three h1,
+.deck-container .slide.only-title.two-three h2
+{
+    text-align: right;
+}
+.deck-container .slide.only-title.three-three h1,
+.deck-container .slide.only-title.three-three h2
+{
+    text-align: center;
+}
+body,
+.deck-container .slide,
+.deck-container
+{
+background: #ffffd7;
 }
