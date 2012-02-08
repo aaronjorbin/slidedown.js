@@ -712,6 +712,21 @@ body.deck-container .deck-status {
 {
     top: 65%;
 }
+#questions{
+    padding-top: 100px;
+}
+#questions h1{
+    display: none;
+}
+
+#joinus{
+    text-align:center;
+    margin-top: 40px;
+    bottom: 30%;
+    left:0;
+    right:0;
+    position:absolute;
+}
 
 
 body,

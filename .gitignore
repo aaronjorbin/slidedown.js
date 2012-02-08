@@ -1,3 +1,4 @@
 .*.sw*
 slidedown.log
 public/slides.html
+node_modules/

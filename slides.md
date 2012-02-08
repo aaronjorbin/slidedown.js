@@ -86,8 +86,8 @@ Metrics written by Coda Hale at Yammer
 *   ## Histogram
     <img src="images/histogram.jpg">
 
+*   # Questions?
 
-*   ### finally {
     <div class='presenter'>
         <h3>Aaron Jorbin</h3>
         <p><a href="http://aaron.jorb.in">aaron.jorb.in</a></p>
@@ -98,8 +98,7 @@ Metrics written by Coda Hale at Yammer
         <p><a href="http://dinomite.net/">dinomite.net</a></p>
         <p><a href="http://twitter.com/dinomite">@dinomite</a></p>
     </div>
-
-    ### Clearspring is hiring
-    [http://clearspring.com/jobs](http://clearspring.com/jobs)
-
-    ### }
+    <div id="joinus">
+        <h3>Clearspring is hiring</h3>
+        [http://clearspring.com/jobs](http://clearspring.com/jobs)
+    <div>
