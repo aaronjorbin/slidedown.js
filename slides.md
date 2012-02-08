@@ -1,6 +1,6 @@
 <!-- INTRODUCTION -->
-*   # This is a PSA
 
+*   # This is a PSA
 <!-- WHY -->
 *   # Why do you want metrics?
 
@@ -11,6 +11,9 @@
 *   # Find Problems
 
 *   # Even the ones we didn't know we had
+
+*   ## Going Down
+     <img src="images/something_wrong.png">  
 
 *   # What do you alert on?
 
