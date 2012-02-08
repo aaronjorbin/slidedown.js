@@ -35,7 +35,7 @@ metrics only get done if they're easy to use.
 *   ## StatsD
     ### Dead simple
     ### (that's important)
-    ### Only counts & timing
+    ### Only counters & timers
 
 *   ## StatsD
     ### Dead simple
@@ -68,7 +68,7 @@ Metrics written by Coda Hale at Yammer
     <img src="images/histogram.jpg">
 
 *   # How do I count things across requests?
-<!--  How it all works flowchart -->
+<!-- How it all works flowchart -->
 
 *   ## Metrics from top to bottom
     <img src="images/flowchart.png">
@@ -87,14 +87,31 @@ Metrics written by Coda Hale at Yammer
 
 <!-- METRIC CATCHER -->
 *   ## MetricCatcher
-
     ### Access to everything in Metrics
     ### Handles persistence
-    ### Speaks JSON
+    ### Listens for JSON
     ### Talks to Ganglia and Graphite
 
+*   ## JSON format
+        {
+            "name":"server.application.section.metric_name",
+            "value":7,
+            "type":"meter",
+            "timestamp":unix_time.millis
+        }
+
 <!-- GANGLIA -->
-*   # Drew, explain this
+*   ## Ganglia
+    ### Drew, explain this
+
+*   ## Cluster Overview
+    <img src="images/cluster overview.png">
+
+*   ## Machine Overview
+    <img src="images/apw00 overview.png">
+
+*   ## Metric Drilldown
+    <img src="images/adm0d cpu drilldown.png">
 
 <!-- GRAPHITE -->
 *   # You use Graphite, too?
@@ -103,6 +120,8 @@ Metrics written by Coda Hale at Yammer
     <img src="images/GB9k.jpg">
 
 <!-- EXISTING ISSUES -->
+*   # What should I graph?
+
 *   # Changing time periods
 
 *   # Drilldown to specific machines
