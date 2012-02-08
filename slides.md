@@ -1,4 +1,8 @@
+<!-- INTRODUCTION -->
 *   # This is a PSA
+
+<!-- WHY -->
+*   # Why do you want metrics?
 
 *   # How we use metrics
 
@@ -10,9 +14,10 @@
 
 *   # What do you alert on?
 
+*   ## Brainiac Wut
+    <img src="images/brainiac-wut.png">
 
-*   # How do I count things across requests?
-
+<!-- STATSD -->
 <!--
 StatsD is simple, which is important because, like testing,
 metrics only get done if they're easy to use.
@@ -32,7 +37,7 @@ metrics only get done if they're easy to use.
 *   ## StatsD
     ### Dead simple
     ### (that's important)
-    ### Only counts & timing
+    ### Only counters & timers
     ### Talks to Graphite
 
 <!--
@@ -42,34 +47,7 @@ Metrics written by Coda Hale at Yammer
 
 *   # Metrics (proper noun)
 
-
-*   ## MetricCatcher
-    ### Access to everything in Metrics
-    ### Handles persistence
-    ### Speaks JSON
-    ### Talks to Ganglia and Graphite
-
-*   ## GB9k
-    <img src="images/GB9k.jpg">
-
-*   ## Brainiac Wut
-    <img src="images/brainiac-wut.png">
-
-
-
-
-*   ## Setup Phetric
-
-    ### Phetric_Sender::init( 'localhost', '1420', $prepend );
-
-*   # $prepend = $app . $env;
-
-*   ## All at once or as they come?
-
-    ### Autoflush paramater will send metrics immediately
-    ### Useful for long running scripts
-
-*   # Metrics come in many flavors
+*   # Metrics offers many different metrics
 
 *   ## Gauges
     <img src="images/gauge.jpg">
@@ -86,8 +64,47 @@ Metrics written by Coda Hale at Yammer
 *   ## Histogram
     <img src="images/histogram.jpg">
 
-*   # Questions?
+*   # How do I count things across requests?
+<!--  How it all works flowchart -->
 
+*   ## Metrics from top to bottom
+    <img src="images/flowchart.png">
+
+<!-- PHETRIC -->
+*   ## Setup Phetric
+
+    ### Phetric_Sender::init( 'localhost', '1420', $prepend );
+
+*   # $prepend = $app . $env;
+
+*   ## All at once or as they come?
+
+    ### Autoflush paramater will send metrics immediately
+    ### Useful for long running scripts
+
+<!-- METRIC CATCHER -->
+*   ## MetricCatcher
+
+    ### Access to everything in Metrics
+    ### Handles persistence
+    ### Speaks JSON
+    ### Talks to Ganglia and Graphite
+
+<!-- GANGLIA -->
+*   # Drew, explain this
+
+<!-- GRAPHITE -->
+*   # You use Graphite, too?
+
+*   ## GB9k
+    <img src="images/GB9k.jpg">
+
+<!-- EXISTING ISSUES -->
+*   # Changing time periods
+
+*   # Drilldown to specific machines
+
+*   # Questions?
     <div class='presenter'>
         <h3>Aaron Jorbin</h3>
         <p><a href="http://aaron.jorb.in">aaron.jorb.in</a></p>
