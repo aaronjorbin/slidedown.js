@@ -12,65 +12,114 @@
 */
 
 var fs = require('fs')
+    , path = require('path')
     , md =  require("node-markdown").Markdown
     , static = require('node-static'); 
 
-// This is the config object.  defaults will be overridden by slidedown.json
-var config = function(){
-    this.template = 'remies';
-    this.title    = 'A slidedown.js presentation';
-    this.header   = '/templates/' + this.template + '/header.index';
-    this.projectdir = '.';
+// This is the default config object.  defaults will be overridden by slidedown.json
+var defaults = function(){
+    this.template   = 'remies';
+    this.projectdir = process.cwd();  
+    this.templatedir= path.dirname( process.argv[1]) + '/template/' + this.template;
+    this.title      = 'A slidedown.js presentation';
+    this.header     = this.templatedir + '/header.html';
+    this.footer     = this.templatedir + '/footer.html';
+    this.source     = 'slides.md'
+    this.port       = 9000;
+    this.jsfiles    = [];
+    this.cssfiles   = [];
+    this.publicDir  = this.projectdir + '/public';
 };
 
-var slidedown = function(config){
+var slidedown = function(){
     var header = footer = source = '';
-    this.updateFile = function( file){ return fs.readFileSync( config.projectdir + file , 'ascii'); };
-    this.getHeader 
 
-}
+    // load slidedown.json.  Create if neccessary. 
+    // @todo:  unshort circuit
+    var config = new defaults;
+    console.log(config);
+    
+    // If public doesn't exist as a sibling to sourceFilenam, try to create it,
+    if (! path.existsSync( config.publicDir ) )
+        fs.mkdirSync(config.publicDir, '0775');
 
-// A couple of globals
-var output = false;
-var header = fs.readFileSync('header.html', 'ascii');
-console.log('header loaded');
-var footer = fs.readFileSync('footer.html', 'ascii');
-console.log('footer loaded');
-var sourceFilename = process.argv[2] || 'slides.md';
-var source = fs.readFileSync(sourceFilename, 'ascii');
-console.log('source: ' + sourceFilename +' loaded');
-writeFile();
+    // A couple of globals
+    var output = false;
+    var header = fs.readFileSync(config.header, 'ascii');
+    console.log('header loaded');
+    var footer = fs.readFileSync(config.footer, 'ascii');
+    console.log('footer loaded');
+    var sourceFilename = config.source; 
+    var source = fs.readFileSync(sourceFilename, 'ascii');
+    console.log('source: ' + sourceFilename +' loaded');
+    writeFile('html');
 
-/* Setup our Server */
-var file = new static.Server('./public');
-require('http').createServer(function (request, response) {
-    request.addListener('end', function () {
-        file.serve(request, response);
+
+
+
+    /* Setup our Server */
+    var file = new static.Server( config.publicDir );
+    require('http').createServer(function (request, response) {
+        request.addListener('end', function () {
+            file.serve(request, response);
+        });
+    }).listen(config.port);
+
+    // Watch our HTML files
+    fs.watchFile( sourceFilename, function(curr,prev){
+        source = fs.readFileSync(sourceFilename, 'ascii');
+        console.log('source reloaded');
+        writeFile('html');
     });
-}).listen(9000);
+    fs.watchFile(config.header, function(curr, prev){
+        header = fs.readFileSync(config.header, 'ascii');
+        //@todo Adjust some meta tags and add link to CSS files
 
-// The first arg is the file to watch
-fs.watchFile( sourceFilename, function(curr,prev){
-    source = fs.readFileSync(sourceFilename, 'ascii');
-    console.log('source reloaded');
-    writeFile();
-});
-fs.watchFile('header.html', function(curr, prev){
-    header = fs.readFileSync('header.html', 'ascii');
-    console.log('header reloaded');
-    writeFile();
-})
-fs.watchFile('footer.html', function(curr,prev){
-    footer = fs.readFileSync('footer.html', 'ascii');
-    console.log('footer reloaded');
-    writeFile();
-});
+        console.log('header reloaded');
+        writeFile('html');
+    })
+    fs.watchFile(config.footer, function(curr,prev){
+        footer = fs.readFileSync(config.footer, 'ascii');
+        //@todo Add a link to the JS files
 
-// The second arg is the output file
-function writeFile(){
-    var filename =  process.argv[3] || sourceFilename.replace(/\.md/, '.html');
-    var innerHtml = md(source);
-    var html = header + innerHtml + footer;
-    fs.writeFileSync('public/'+ filename, html, 'ascii');
-    console.log( filename + ' written');
+        console.log('footer reloaded');
+        writeFile('html');
+    });
+    // watch slides.md sibling dir images.  Create if needed.
+
+    // Watch our CSS Files
+
+    // Watch our JS files
+
+
+    // Used to concat our js and css files
+    function concatFiles(){
+
+    }
+
+    // The second arg is the output file
+    function writeFile( type ){
+        var content;
+        var filename;
+        if (type =='html' )
+        {
+            var innerHtml = md(source);
+            content = header + innerHtml + footer;
+            filename = 'index.html';
+        }
+        else if(type == 'js')
+        {
+            content = concatFiles('js', config.jsfiles);
+            filename = 'js/script.js';
+        }
+        else if(type == 'css')
+        {
+            content = concatFiles('css', config.cssfiles);
+            filename = 'css/style.css';
+        }
+        fs.writeFileSync( config.publicDir +  '/' + filename, content, 'ascii');
+        console.log( filename + ' written');
+    }
 }
+var abc = new defaults;
+slidedown();
