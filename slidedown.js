@@ -22,13 +22,15 @@ var defaults = function(){
     this.projectdir = process.cwd();  
     this.templatedir= path.dirname( process.argv[1]) + '/template/' + this.template;
     this.title      = 'A slidedown.js presentation';
-    this.header     = this.templatedir + '/header.html';
-    this.footer     = this.templatedir + '/footer.html';
     this.source     = 'slides.md'
     this.port       = 9000;
+    this.publicDir  = this.projectdir + '/public';
+
+    // Read a theme config file
+    this.header     = this.templatedir + '/header.html';
+    this.footer     = this.templatedir + '/footer.html';
     this.jsfiles    = [];
     this.cssfiles   = [];
-    this.publicDir  = this.projectdir + '/public';
 };
 
 var slidedown = function(){
@@ -43,8 +45,6 @@ var slidedown = function(){
     if (! path.existsSync( config.publicDir ) )
         fs.mkdirSync(config.publicDir, '0775');
 
-    // A couple of globals
-    var output = false;
     var header = fs.readFileSync(config.header, 'ascii');
     console.log('header loaded');
     var footer = fs.readFileSync(config.footer, 'ascii');
@@ -53,17 +53,6 @@ var slidedown = function(){
     var source = fs.readFileSync(sourceFilename, 'ascii');
     console.log('source: ' + sourceFilename +' loaded');
     writeFile('html');
-
-
-
-
-    /* Setup our Server */
-    var file = new static.Server( config.publicDir );
-    require('http').createServer(function (request, response) {
-        request.addListener('end', function () {
-            file.serve(request, response);
-        });
-    }).listen(config.port);
 
     // Watch our HTML files
     fs.watchFile( sourceFilename, function(curr,prev){
@@ -120,6 +109,14 @@ var slidedown = function(){
         fs.writeFileSync( config.publicDir +  '/' + filename, content, 'ascii');
         console.log( filename + ' written');
     }
+
+    // Setup our Server
+    var file = new static.Server( config.publicDir );
+    require('http').createServer(function (request, response) {
+        request.addListener('end', function () {
+            file.serve(request, response);
+        });
+    }).listen(config.port);
 }
-var abc = new defaults;
+
 slidedown();
