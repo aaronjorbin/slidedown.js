@@ -19,18 +19,25 @@ var fs = require('fs')
 
 // This is the default config object.  defaults will be overridden by slidedown.json
 var settings = function(){
-    this.template     = 'remies';
     this.projectdir   = process.cwd();  
     var slidedownDir = this.slidedownDir = path.dirname( process.argv[1]);
-    this.templatedir  = this.slidedownDir + '/template/' + this.template;
-    this.title        = 'A slidedown.js presentation';
-    this.source       = 'slides.md'
-    this.port         = 9000;
-    this.publicDir    = this.projectdir + '/public';
-    this.header       = this.templatedir + '/header.html';
-    this.footer       = this.templatedir + '/footer.html';
+    // Attempt to load the 
+    try{
+        this,slideshowConfig = JSON.parse( fs.readFileSync( this.projectdir + '/slidedown.json', 'ascii') );
+    } catch(err) {
+        // If the file doesn't exist, we will just use defaults
+        this.slideshowConfig = {}; 
+    }
+    this.template     = this.slideshowConfig.template || 'remies';
+    this.templatedir  = this.slideshowConfig.templatedir || this.slidedownDir + '/template/' + this.template;
+    this.title        = this.slideshowConfig.title || 'A slidedown.js presentation';
+    this.source       = this.slideshowConfig.source ||  'slides.md'
+    this.port         = this.slideshowConfig.port || 9000;
+    this.publicDir    = this.slideshowConfig.publicDir || this.projectdir + '/public';
+    this.header       = this.slideshowConfig.header || this.templatedir + '/header.html';
+    this.footer       = this.slideshowConfig.footer ||  this.templatedir + '/footer.html';
 
-    // You'll want to keep these files
+    // JS AND CSS
     this.jsfiles    = [ this.slidedownDir + '/deck.js/core/deck.core.js' ];
     this.cssfiles   = [ this.slidedownDir + '/deck.js/core/deck.core.css' ];
 
@@ -44,14 +51,21 @@ var settings = function(){
             return slidedownDir + '/deck.js/extensions/' + name + '/deck.' + name + '.css';
         });
     }
-
+    if ( _.isArray( this.slideshowConfig.extensions ) )
+    {
+        this.jsfiles = _.map( this.slideshowConfig.extensions , function(name){
+            return slidedownDir + '/deck.js/extensions/' + name + '/deck.' + name + '.js';
+        });
+        this.cssfiles = _.map( this.slideshowConfig.extensions , function(name){
+            return slidedownDir + '/deck.js/extensions/' + name + '/deck.' + name + '.css';
+        });
+    }
 };
 
 var slidedown = function(){
     var header = footer = source = '';
 
     // load slidedown.json.  Create if neccessary. 
-    // @todo:  unshort circuit
     var config = new settings;
 
     // Add the file that converts our UL to slides last
@@ -60,14 +74,18 @@ var slidedown = function(){
     var sourceFilename = config.source; 
     
     // If public doesn't exist as a sibling to sourceFilenam, try to create it,
-    if (! path.existsSync( config.publicDir ) )
+    if (! path.existsSync( config.publicDir ) ){
         fs.mkdirSync(config.publicDir, '0775');
+        fs.mkdirSync(config.publicDir + '/css', '0775');
+        fs.mkdirSync(config.publicDir + '/js', '0775');
+    }
 
     function loadHeader(){
         header = fs.readFileSync(config.header, 'ascii');
         header =  header.replace(/\%\=title\=\%/gi , config.title);
         console.log('header loaded');
     }
+
     function loadFooter(){
         footer = fs.readFileSync(config.footer, 'ascii');
         console.log('footer loaded');
@@ -78,6 +96,8 @@ var slidedown = function(){
     var source = fs.readFileSync(sourceFilename, 'ascii');
     console.log('source: ' + sourceFilename +' loaded');
     writeFile('html');
+    writeFile('css');
+    writeFile('js');
 
     // Watch our HTML files
     fs.watchFile( sourceFilename, function(curr,prev){
@@ -95,13 +115,27 @@ var slidedown = function(){
     // watch slides.md sibling dir images.  Create if needed.
 
     // Watch our CSS Files
+    _.each(config.cssfiles, function(css){
+        fs.watchFile(css, function(curr,prev){
+            console.log('css file reloaded: ' + css);
+            writeFile( 'css' );
+        });
+    });
 
     // Watch our JS files
+    _.each(config.jsfiles, function(js){
+        fs.watchFile(js, function(curr,prev){
+            console.log('js file reloaded: ' + js );;
+            writeFile( 'js' );
+        });
+    });
 
 
     // Used to concat our js and css files
-    function concatFiles(){
-
+    function concatFiles(type, files){
+        return _.reduce(files, function(memo, file){
+            return memo + fs.readFileSync(file, 'ascii');
+        },'');
     }
 
     // The second arg is the output file
@@ -129,14 +163,12 @@ var slidedown = function(){
     }
 
     // Setup our Server
-    var file = new static.Server( config.publicDir );
+    var fileRequest = new static.Server( config.publicDir );
     require('http').createServer(function (request, response) {
         request.addListener('end', function () {
-            file.serve(request, response);
+            fileRequest.serve(request, response);
         });
     }).listen(config.port);
 }
 
-//slidedown();
-
-    var config = new settings;    console.log(config);
+slidedown();
