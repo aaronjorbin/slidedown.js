@@ -11,7 +11,7 @@
 * Module dependencies.
 */
 
-var fs = require('fs')
+var fs = require('fs.extra')
     , path = require('path')
     , md =  require("node-markdown").Markdown
     , _ = require('underscore')
@@ -19,8 +19,8 @@ var fs = require('fs')
 
 // This is the default config object.  defaults will be overridden by slidedown.json
 var settings = function(){
-    this.projectdir   = process.cwd();  
-    var slidedownDir = this.slidedownDir = path.dirname( process.argv[1]);
+    this.projectdir     = process.cwd();
+    var slidedownDir = this.slidedownDir = path.resolve(__dirname + '/..' ); 
     // Attempt to load the 
     try{
         this,slideshowConfig = JSON.parse( fs.readFileSync( this.projectdir + '/slidedown.json', 'ascii') );
@@ -38,8 +38,8 @@ var settings = function(){
     this.footer       = this.slideshowConfig.footer ||  this.templatedir + '/footer.html';
 
     // JS AND CSS
-    this.jsfiles    = [ this.slidedownDir + '/deck.js/core/deck.core.js' ];
-    this.cssfiles   = [ this.slidedownDir + '/deck.js/core/deck.core.css' ];
+    this.jsfiles    = [ ];
+    this.cssfiles   = [ ];
 
     this.templateConfig = JSON.parse( fs.readFileSync( this.templatedir + '/config.json', 'ascii'  ) )
     if ( _.isArray( this.templateConfig.extensions ) ) 
@@ -60,6 +60,7 @@ var settings = function(){
             return slidedownDir + '/deck.js/extensions/' + name + '/deck.' + name + '.css';
         });
     }
+    //*/
 };
 
 var slidedown = function(){
@@ -69,16 +70,33 @@ var slidedown = function(){
     var config = new settings;
 
     // Add the file that converts our UL to slides last
-    config.jsfiles.push( config.slidedownDir +'/public_slidedown.js' );
+    config.jsfiles.unshift( config.slidedownDir +'/deck.js/core/deck.core.js' );
+    config.cssfiles.unshift( config.slidedownDir +'/deck.js/core/deck.core.css' );
+    config.jsfiles.push( config.slidedownDir +'/src/public_slidedown.js' );
 
     var sourceFilename = config.source; 
     
     // If public doesn't exist as a sibling to sourceFilenam, try to create it,
-    if (! path.existsSync( config.publicDir ) ){
+    if (! path.existsSync( config.publicDir ) )
         fs.mkdirSync(config.publicDir, '0775');
+    if (! path.existsSync( config.publicDir + '/css' ) )
         fs.mkdirSync(config.publicDir + '/css', '0775');
+    if (! path.existsSync( config.publicDir + '/js' ) )
         fs.mkdirSync(config.publicDir + '/js', '0775');
+
+    // Add Modernizor
+    try{
+        fs.readFileSync( config.publicDir + '/js//modernizr.custom.js');
+    } catch(error)
+    {
+        // copy Modernizor
+        fs.copy( config.slidedownDir + '/deck.js/modernizr.custom.js' , config.publicDir + '/js/modernizr.custom.js', function(err)
+        {
+            if ( err != undefined)
+                console.log(err);
+        });
     }
+
 
     function loadHeader(){
         header = fs.readFileSync(config.header, 'ascii');
@@ -94,32 +112,45 @@ var slidedown = function(){
 
     // Watch our HTML files
     fs.watchFile( sourceFilename, function(curr,prev){
-        source = fs.readFileSync(sourceFilename, 'ascii');
-        console.log('source reloaded');
-        writeFile('html');
+        if (curr.mtime != prev.mtime)
+        {
+            source = fs.readFileSync(sourceFilename, 'ascii');
+            console.log('source reloaded');
+            writeFile('html');
+        }
     });
     fs.watchFile(config.header, function(curr, prev){
-        loadHeader();
-        writeFile('html');
+        if (curr.mtime != prev.mtime)
+        {
+            loadHeader();
+            writeFile('html');
+        }
     })
     fs.watchFile(config.footer, function(curr,prev){
-        writeFile('html');
+        if (curr.mtime != prev.mtime)
+            writeFile('html');
     });
     // watch slides.md sibling dir images.  Create if needed.
 
     // Watch our CSS Files
     _.each(config.cssfiles, function(css){
         fs.watchFile(css, function(curr,prev){
-            console.log('css file reloaded: ' + css);
-            writeFile( 'css' );
+            if (curr.mtime != prev.mtime)
+            {
+                console.log('css file reloaded: ' + css);
+                writeFile( 'css' );
+            }
         });
     });
 
     // Watch our JS files
     _.each(config.jsfiles, function(js){
         fs.watchFile(js, function(curr,prev){
-            console.log('js file reloaded: ' + js );;
-            writeFile( 'js' );
+            if (curr.mtime != prev.mtime)
+            {
+                console.log('js file reloaded: ' + js );;
+                writeFile( 'js' );
+            }
         });
     });
 
@@ -174,3 +205,5 @@ var slidedown = function(){
 }
 
 slidedown();
+//    var config = new settings;
+//console.log(config);
