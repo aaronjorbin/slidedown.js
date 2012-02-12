@@ -91,13 +91,6 @@ var slidedown = function(){
         console.log('footer loaded');
     }
 
-    loadHeader();
-    loadFooter();
-    var source = fs.readFileSync(sourceFilename, 'ascii');
-    console.log('source: ' + sourceFilename +' loaded');
-    writeFile('html');
-    writeFile('css');
-    writeFile('js');
 
     // Watch our HTML files
     fs.watchFile( sourceFilename, function(curr,prev){
@@ -169,6 +162,15 @@ var slidedown = function(){
             fileRequest.serve(request, response);
         });
     }).listen(config.port);
+
+    // Everything is ready to go, let's do our first build
+    loadHeader();
+    loadFooter();
+    source = fs.readFileSync(sourceFilename, 'ascii');
+    console.log('source: ' + sourceFilename +' loaded');
+    writeFile('html');
+    writeFile('css');
+    writeFile('js');
 }
 
 slidedown();

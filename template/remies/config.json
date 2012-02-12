@@ -1,5 +1,9 @@
 {
-  "author": "Aaron Jorbin <aaron@jorb.in> (http://aaron.jorb.in)",
+  "author": {
+    "name" : "Aaron Jorbin",
+    "url" : "http://aaron.jorb.in",
+    "email": "aaron@jorb.in"
+  },
   "extensions" : ["hash" , "menu" , "goto" , "status" , "navigation"] 
     
 
