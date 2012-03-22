@@ -7,6 +7,8 @@
 * https://github.com/aaronjorbin/slidedown.js/blob/master/GPL-license.txt
 */
 
+var debug = false;
+
 /**
 * Module dependencies.
 */
@@ -21,6 +23,7 @@ var fs = require('fs.extra')
 var settings = function(){
     this.projectdir     = process.cwd();
     var slidedownDir = this.slidedownDir = path.resolve(__dirname + '/..' ); 
+    var templatedir;
     // Attempt to load the 
     try{
         this,slideshowConfig = JSON.parse( fs.readFileSync( this.projectdir + '/slidedown.json', 'ascii') );
@@ -29,7 +32,7 @@ var settings = function(){
         this.slideshowConfig = {}; 
     }
     this.template     = this.slideshowConfig.template || 'remies';
-    this.templatedir  = this.slideshowConfig.templatedir || this.slidedownDir + '/template/' + this.template;
+    templatedir = this.templatedir  = this.slideshowConfig.templatedir || this.slidedownDir + '/template/' + this.template;
     this.title        = this.slideshowConfig.title || 'A slidedown.js presentation';
     this.source       = this.slideshowConfig.source ||  'slides.md'
     this.port         = this.slideshowConfig.port || 9000;
@@ -60,7 +63,18 @@ var settings = function(){
             return slidedownDir + '/deck.js/extensions/' + name + '/deck.' + name + '.css';
         });
     }
-    //*/
+    if ( _.isArray( this.templateConfig.css ) )
+    {
+        _.extend(this.cssfiles , _.map( this.templateConfig.css , function(name){
+            return templatedir + '/css/'  + name ;
+        }));
+    }
+    if ( _.isArray( this.templateConfig.js ) )
+    {
+        _.extend(this.jsfiles , _.map( this.templateConfig.js , function(name){
+            return templatedir + '/js/'  + name ;
+        }));
+    }
 };
 
 var slidedown = function(){
@@ -97,7 +111,6 @@ var slidedown = function(){
         });
     }
 
-
     function loadHeader(){
         header = fs.readFileSync(config.header, 'ascii');
         header =  header.replace(/\%\=title\=\%/gi , config.title);
@@ -112,7 +125,7 @@ var slidedown = function(){
 
     // Watch our HTML files
     fs.watchFile( sourceFilename, function(curr,prev){
-        if (curr.mtime != prev.mtime)
+        if ( Date.parse( curr.mtime  )!= Date.parse( prev.mtime )  )
         {
             source = fs.readFileSync(sourceFilename, 'ascii');
             console.log('source reloaded');
@@ -120,22 +133,24 @@ var slidedown = function(){
         }
     });
     fs.watchFile(config.header, function(curr, prev){
-        if (curr.mtime != prev.mtime)
+        if ( Date.parse( curr.mtime  )!= Date.parse( prev.mtime )  )
         {
             loadHeader();
             writeFile('html');
         }
     })
     fs.watchFile(config.footer, function(curr,prev){
-        if (curr.mtime != prev.mtime)
+        if ( Date.parse( curr.mtime  )!= Date.parse( prev.mtime )  )
             writeFile('html');
     });
     // watch slides.md sibling dir images.  Create if needed.
+    if (debug)
+    console.log( config);
 
     // Watch our CSS Files
     _.each(config.cssfiles, function(css){
         fs.watchFile(css, function(curr,prev){
-            if (curr.mtime != prev.mtime)
+            if ( Date.parse( curr.mtime  )!= Date.parse( prev.mtime )  )
             {
                 console.log('css file reloaded: ' + css);
                 writeFile( 'css' );
@@ -146,7 +161,7 @@ var slidedown = function(){
     // Watch our JS files
     _.each(config.jsfiles, function(js){
         fs.watchFile(js, function(curr,prev){
-            if (curr.mtime != prev.mtime)
+            if ( Date.parse( curr.mtime  )!= Date.parse( prev.mtime )  )
             {
                 console.log('js file reloaded: ' + js );;
                 writeFile( 'js' );

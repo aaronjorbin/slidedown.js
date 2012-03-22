@@ -4,7 +4,9 @@
     "url" : "http://aaron.jorb.in",
     "email": "aaron@jorb.in"
   },
-  "extensions" : ["hash" , "menu" , "goto" , "status" , "navigation"] 
+  "extensions" : ["hash" , "menu" , "goto" , "status" , "navigation"],
+  "css" : ["style.css"],
+  "js" : ["slides.js"]
     
 
 
