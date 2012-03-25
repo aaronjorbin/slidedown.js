@@ -4,6 +4,8 @@
     "url" : "http://aaron.jorb.in",
     "email": "aaron@jorb.in"
   },
+  "name" : "Remies",
+  "base" : "deck.js",
   "extensions" : ["hash" , "menu" , "goto" , "status" , "navigation"],
   "css" : ["style.css"],
   "js" : ["slides.js"]

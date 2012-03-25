@@ -30,9 +30,6 @@ var slidedown = function(){
     var config = new settings;
 
     // Add the file that converts our UL to slides last
-    config.jsfiles.unshift( config.slidedownDir +'/deck.js/core/deck.core.js' );
-    config.cssfiles.unshift( config.slidedownDir +'/deck.js/core/deck.core.css' );
-    config.jsfiles.push( config.slidedownDir +'/src/public_slidedown.js' );
 
     var sourceFilename = config.source; 
     

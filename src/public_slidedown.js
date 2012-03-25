@@ -5,7 +5,6 @@ Dual licensed under the MIT license and GPL license.
 https://github.com/aaronjorbin/slidedown.js/blob/master/MIT-license.txt
 https://github.com/aaronjorbin/slidedown.js/blob/master/GPL-license.txt
 */
-
 (function($) {
     var container = $('.deck-container');  
     slideDeck = $('.deck-container').children('ul').children('li').each( function(count){
@@ -63,6 +62,5 @@ https://github.com/aaronjorbin/slidedown.js/blob/master/GPL-license.txt
     }
     container.children('ul').remove();
     $.deck('.slide');
-
 
 })(jQuery)
