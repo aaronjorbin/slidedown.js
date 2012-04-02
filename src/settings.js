@@ -7,7 +7,7 @@ var deckJsConfig = function(templateConfig , slideshowConfig   )
 {
     this.jsfiles      = [ slidedownDir +'/deck.js/core/deck.core.js' ];
     this.cssfiles     = [ slidedownDir +'/deck.js/core/deck.core.css'];
-    this.latejsfiles  = [ slidedownDir +'/src/public_slidedown.js'];
+    this.latejsfiles  = [ slidedownDir +'/src/public_deckjs_slidedown.js'];
     this.latecssfiles = [ ];
 
     if ( _.isArray( templateConfig.extensions ) ) 
@@ -86,8 +86,6 @@ module.exports = function(){
     this.cssfiles.push.apply(this.cssfiles, baseFiles.latecssfiles);
 
     _.extend(this.cssfiles, baseFiles.latecssfiles);
-
-console.log(this.jsfiles);
 
 };
 
