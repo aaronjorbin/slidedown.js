@@ -12,24 +12,23 @@ var debug = false;
 /**
 * Module dependencies.
 */
-
 var fs = require('fs.extra')
     , path = require('path')
     , md =  require("node-markdown").Markdown
     , _ = require('underscore')
     , static = require('node-static') 
-    , settings = require( __dirname + '/../src/settings.js'); 
+    , settings = require( __dirname + '/../src/settings.js') 
+    , templateTags = require( __dirname + '/../src/templateTags.js'); 
 
-
-// This is the default config object.  defaults will be overridden by slidedown.json
 
 var slidedown = function(){
     var header = footer = source = '';
 
-    // load slidedown.json.  Create if neccessary. 
     var config = new settings;
-
     // Add the file that converts our UL to slides last
+
+    if (debug)
+    console.log( config);
 
     var sourceFilename = config.source; 
     
@@ -41,28 +40,46 @@ var slidedown = function(){
     if (! path.existsSync( config.publicDir + '/js' ) )
         fs.mkdirSync(config.publicDir + '/js', '0775');
 
-    // Add Modernizor
+    if (config.modernizr){
+        // Add Modernizor if it's not there already
+        try{
+            fs.readFileSync( config.publicDir + '/js/modernizr.custom.js');
+        } catch(error)
+        {
+            // copy Modernizor
+            fs.copy( config.slidedownDir + '/deck.js/modernizr.custom.js' , config.publicDir + '/js/modernizr.custom.js', function(err)
+            {
+                if ( err != undefined)
+                    console.log(err);
+            });
+        }
+    }
+
+    // Add jQuery if it's not already there
     try{
-        fs.readFileSync( config.publicDir + '/js//modernizr.custom.js');
+        fs.readFileSync( config.publicDir + '/js/jquery.js');
     } catch(error)
     {
         // copy Modernizor
-        fs.copy( config.slidedownDir + '/deck.js/modernizr.custom.js' , config.publicDir + '/js/modernizr.custom.js', function(err)
+        fs.copy( config.slidedownDir + '/deck.js/jquery-1.7.min.js' , config.publicDir + '/js/jquery.js', function(err)
         {
             if ( err != undefined)
                 console.log(err);
         });
     }
 
+
+    function loadFile(which) {
+        console.log(which + ' loaded');
+        return templateTags(  fs.readFileSync(config[which] , 'ascii'),config );
+    }
+
     function loadHeader(){
-        header = fs.readFileSync(config.header, 'ascii');
-        header =  header.replace(/\%\=title\=\%/gi , config.title);
-        console.log('header loaded');
+        header = loadFile('header');
     }
 
     function loadFooter(){
-        footer = fs.readFileSync(config.footer, 'ascii');
-        console.log('footer loaded');
+        footer = loadFile('footer');
     }
 
 
@@ -84,11 +101,12 @@ var slidedown = function(){
     })
     fs.watchFile(config.footer, function(curr,prev){
         if ( Date.parse( curr.mtime  )!= Date.parse( prev.mtime )  )
+        {
+            loadFooter();
             writeFile('html');
+        }
     });
-    // watch slides.md sibling dir images.  Create if needed.
-    if (debug)
-    console.log( config);
+
 
     // Watch our CSS Files
     _.each(config.cssfiles, function(css){
@@ -163,5 +181,3 @@ var slidedown = function(){
 }
 
 slidedown();
-//    var config = new settings;
-//console.log(config);

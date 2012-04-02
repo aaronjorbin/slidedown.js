@@ -9,6 +9,7 @@ var deckJsConfig = function(templateConfig , slideshowConfig   )
     this.cssfiles     = [ slidedownDir +'/deck.js/core/deck.core.css'];
     this.latejsfiles  = [ slidedownDir +'/src/public_deckjs_slidedown.js'];
     this.latecssfiles = [ ];
+    this.modernizor = true;
 
     if ( _.isArray( templateConfig.extensions ) ) 
     {
@@ -31,7 +32,6 @@ var deckJsConfig = function(templateConfig , slideshowConfig   )
     }
 }
 
-// Each base will map to it's own config function that returns a jsfiles array and a cssfiles array 
 var basemap = {
    'deck.js' : deckJsConfig 
 };
@@ -67,6 +67,9 @@ module.exports = function(){
     var baseFiles = new basemap[this.base]( this.templateConfig, this.slideshowConfig );
     this.jsfiles  = baseFiles.jsfiles;
     this.cssfiles = baseFiles.cssfiles;
+
+    // register if our base requires modernizor
+    this.modernizor = baseFiles.modernizor || false;
 
     // Template specific css and js
     if ( _.isArray( this.templateConfig.css ) )
