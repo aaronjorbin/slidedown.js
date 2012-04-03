@@ -1,3 +1,9 @@
+/*!
+* Settings Parser for slidedown.js
+* 
+* Reads options from an individual slideshows config and from a template config
+* Templates also specify a base.  Only base right now is deck.js
+*/
 var fs = require('fs.extra')
     , path = require('path')
     , _ = require('underscore');

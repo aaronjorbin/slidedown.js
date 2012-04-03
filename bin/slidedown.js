@@ -14,7 +14,6 @@ var debug = false;
 */
 var fs = require('fs.extra')
     , path = require('path')
-    , md =  require("node-markdown").Markdown
     , _ = require('underscore')
     , static = require('node-static') 
     , settings = require( __dirname + '/../src/settings.js') 
@@ -144,7 +143,7 @@ var slidedown = function(){
         var filename;
         if (type =='html' )
         {
-            var innerHtml = md(source);
+            var innerHtml = templateTags( source , config );
             content = header + innerHtml + footer;
             filename = 'index.html';
         }
@@ -158,6 +157,7 @@ var slidedown = function(){
             content = concatFiles('css', config.cssfiles);
             filename = 'css/style.css';
         }
+
         fs.writeFileSync( config.publicDir +  '/' + filename, content, 'ascii');
         console.log( filename + ' written');
     }
