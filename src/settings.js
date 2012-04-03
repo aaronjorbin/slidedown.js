@@ -46,6 +46,7 @@ module.exports = function(){
     this.projectdir     = process.cwd();
     this.slidedownDir = slidedownDir; 
     var templatedir;
+    var projectdir = this.projectdir
 
     // Attempt to load a config for a specific slideshow
     try{
@@ -67,9 +68,9 @@ module.exports = function(){
     this.publicDir    = this.slideshowConfig.publicDir || this.projectdir + '/public';
     this.header       = this.slideshowConfig.header || this.templatedir + '/header.html';
     this.footer       = this.slideshowConfig.footer ||  this.templatedir + '/footer.html';
-    this.base         = this.slideshowConfig.base || this.templateConfig.base || 'deck.js' ;  
 
-    // JS AND CSS
+    // JS AND CSS based on the base
+    this.base         = this.templateConfig.base || 'deck.js' ;  
     var baseFiles = new basemap[this.base]( this.templateConfig, this.slideshowConfig );
     this.jsfiles  = baseFiles.jsfiles;
     this.cssfiles = baseFiles.cssfiles;
@@ -91,6 +92,24 @@ module.exports = function(){
             return templatedir + '/js/'  + name ;
         }));
     }
+
+
+    // Slideshow specific css and js
+    if ( _.isArray( this.slideshowConfig.css ) )
+    {
+        this.cssfiles.push.apply( this.cssfiles , _.map( this.slideshowConfig.css , function(name){
+            return projectdir + '/css/'  + name ;
+        }));
+    }
+
+    if ( _.isArray( this.slideshowConfig.js ) )
+    {
+        this.jsfiles.push.apply( this.jsfiles , _.map( this.slideshowConfig.js , function(name){
+            return projectdir + '/js/'  + name ;
+        }));
+    }
+
+
     this.jsfiles.push.apply(this.jsfiles, baseFiles.latejsfiles);
     this.cssfiles.push.apply(this.cssfiles, baseFiles.latecssfiles);
 
