@@ -50,11 +50,12 @@ module.exports = function(){
 
     // Attempt to load a config for a specific slideshow
     try{
-        this,slideshowConfig = JSON.parse( fs.readFileSync( this.projectdir + '/slidedown.json', 'ascii') );
+        this.slideshowConfig = JSON.parse( fs.readFileSync( this.projectdir + '/slidedown.json', 'ascii') );
     } catch(err) {
         // If the file doesn't exist, we will just use defaults
         this.slideshowConfig = {}; 
     }
+    console.log(this.slideshowConfig);
 
     // Load the Template 
     this.template     = this.slideshowConfig.template || 'remies';

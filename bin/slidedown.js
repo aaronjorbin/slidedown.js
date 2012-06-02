@@ -136,7 +136,8 @@ var slidedown = function(){
     // Used to concat our js and css files
     function concatFiles(type, files){
         return _.reduce(files, function(memo, file){
-            return memo + fs.readFileSync(file, 'ascii');
+            var comment = '\n /* ' + file + ' */ \n';
+            return memo + comment + fs.readFileSync(file, 'ascii');
         },'');
     }
 
