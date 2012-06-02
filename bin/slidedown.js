@@ -50,7 +50,10 @@ var slidedown = function(){
             {
                 if ( err != undefined)
                     console.log(err);
+                else 
+                    console.log('modernizer added');
             });
+
         }
     }
 

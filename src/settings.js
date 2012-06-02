@@ -15,7 +15,7 @@ var deckJsConfig = function(templateConfig , slideshowConfig   )
     this.cssfiles     = [ slidedownDir +'/deck.js/core/deck.core.css'];
     this.latejsfiles  = [ slidedownDir +'/src/public_deckjs_slidedown.js'];
     this.latecssfiles = [ ];
-    this.modernizor = true;
+    this.modernizr = true;
 
     if ( _.isArray( templateConfig.extensions ) ) 
     {
@@ -75,8 +75,8 @@ module.exports = function(){
     this.jsfiles  = baseFiles.jsfiles;
     this.cssfiles = baseFiles.cssfiles;
 
-    // register if our base requires modernizor
-    this.modernizor = baseFiles.modernizor || false;
+    // register if our base requires modernizr
+    this.modernizr = baseFiles.modernizr || false;
 
     // Template specific css and js
     if ( _.isArray( this.templateConfig.css ) )
