@@ -3,7 +3,7 @@
 * Passing content returns content that we realy want to use
 */
 
-var  md =  require("node-markdown").Markdown;
+var  md =  require("marked");
 
 module.exports = function( input, config ) {
 
