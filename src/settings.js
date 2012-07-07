@@ -64,6 +64,7 @@ module.exports = function(){
 
     // Based on the template and the slideshowconfig, setup some properties
     this.title        = this.slideshowConfig.title || 'A slidedown.js presentation';
+    this.ga           = this.slideshowConfig.ga || '';
     this.source       = this.slideshowConfig.source ||  'slides.md'
     this.port         = this.slideshowConfig.port || 9000;
     this.publicDir    = this.slideshowConfig.publicDir || this.projectdir + '/public';

@@ -5,16 +5,19 @@
 
 var  md =  require("marked");
 
-module.exports = function( input, config ) {
+module.exports = function( input, config , skipMD ) {
 
     // Title
     input = input.replace(/\%\=title\=\%/gi , config.title);
+    // Google Analytics ID
+    input = input.replace(/\%\=ga\=\%/gi , config.ga);
 
     // Twitter Embends
     // @TODO: Add parsing for twitter urls to do twitter URL Embedins
 
     // MarkDown
-    input = md(input);
+    if (skipMD !== true)
+        input = md(input);
 
     return input;
 };

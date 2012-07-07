@@ -73,7 +73,7 @@ var slidedown = function(){
 
     function loadFile(which) {
         console.log(which + ' loaded');
-        return templateTags(  fs.readFileSync(config[which] , 'ascii'),config );
+        return templateTags(  fs.readFileSync(config[which] , 'ascii'),config , true );
     }
 
     function loadHeader(){

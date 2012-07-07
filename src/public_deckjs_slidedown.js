@@ -16,7 +16,7 @@ https://github.com/aaronjorbin/slidedown.js/blob/master/GPL-license.txt
         var title = $( li ).find('h1').text().replace(/[\W]/gi, '_').toLowerCase() || $( li ).find('h2').text().replace(/[\W]/gi, '_').toLowerCase() || 'slide_' + num;
         var classes = generateClasses(li, num);
         var content =  $(li).html();
-        var section = $('<section></section>').attr('id', title).addClass(classes).html( content );
+        var section = $('<section></section>').attr('id', title).addClass(classes).addClass($(li).attr('class')).html( content );
         $(li).remove();
         container.append(section); 
 
