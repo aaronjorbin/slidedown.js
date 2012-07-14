@@ -90,3 +90,24 @@ body,
 {
     background: #ffffd7;
 }
+
+
+body, .deck-container .slide, .deck-container {
+    background: #fdf6e3;
+}
+
+#what_is_accessibility blockquote,
+#jorbin_s_three_laws blockquote,
+#what_is_one_thing_that_you_think_every_developer_should_know_about_accessibility_ blockquote{
+    font-size: 220%;
+}
+
+em{
+    position: absolute;
+    bottom: 20px;
+}
+
+img{
+    max-height:600px;
+}
+
