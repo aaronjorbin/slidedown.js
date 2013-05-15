@@ -16,7 +16,7 @@ https://github.com/aaronjorbin/slidedown.js/blob/master/GPL-license.txt
         var title = $( li ).find('h1').text().replace(/[\W]/gi, '_').toLowerCase() || $( li ).find('h2').text().replace(/[\W]/gi, '_').toLowerCase() || 'slide_' + num;
         var classes = generateClasses(li, num);
         var content =  $(li).html();
-        var section = $('<section></section>').attr('id', title).addClass(classes).addClass($(li).attr('class')).html( content );
+        var section = $('<section></section>').attr('id', title).attr('tabindex', '0').attr('aria-hidden', 'true').addClass(classes).addClass($(li).attr('class')).html( content );
         $(li).remove();
         container.append(section); 
 
@@ -65,5 +65,14 @@ https://github.com/aaronjorbin/slidedown.js/blob/master/GPL-license.txt
     }
     container.children('ul').remove();
     $.deck('.slide');
+    
+    // use aria-hidden as we navigate 
+    $(document).on('deck.change', function(event, from, to) {
+        $($('section')[from]).attr('aria-hidden', 'true');
+        $($('section')[to]).attr('aria-hidden', 'false');
+    });
+    $(document).on('deck.init', function() {
+        $('.deck-current').attr('aria-hidden', 'false');
+    });
 
 })(jQuery)
